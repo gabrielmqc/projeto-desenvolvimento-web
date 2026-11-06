@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import Navbar from "./components/navbar/Navbar";
 function App() {
   const [tarefas, setTarefas] = useState([
     { id: 1, text: "Aprender Hooks" }
@@ -32,7 +32,7 @@ function App() {
   return (
       <div>
         <h1>Lista de Tarefas</h1>
-
+        <Navbar />
         <form onSubmit={adicionarTarefa}>
           <input
               type="text"
@@ -56,9 +56,11 @@ function App() {
                 >
                   Remover
                 </button>
+                <span>21312</span>
               </li>
           ))}
         </ul>
+
       </div>
   );
 }

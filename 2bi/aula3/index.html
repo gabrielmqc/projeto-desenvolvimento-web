@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Page Title</title>
+    <link rel='stylesheet' href='main.css'>
+</head>
+
+<body>
+    <h1>Lista de produtos</h1>
+    <ul id="lista-produtos"></ul>
+
+    <script>
+        fetch("http://localhost:3000/api/produtos")
+            .then(resposta => {
+                if (!resposta.ok) {
+                    throw new Error("Erro ao consultar produtos");
+                }
+
+                return resposta.json();
+            })
+            .then(produtos => {
+                const lista = document.getElementById("lista-produtos");
+
+                produtos.forEach(produto => {
+                    const item = document.createElement("li");
+
+                    item.textContent =
+                        `${produto.nome} - R$ ${produto.preco.toFixed(2)}`;
+
+                    lista.appendChild(item);
+                });
+            })
+            .catch(erro => {
+                console.error(erro);
+            });
+    </script>
+</body>
+
+</html>
