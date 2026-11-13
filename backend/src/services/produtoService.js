@@ -1,48 +1,37 @@
-const produtos = require("../data/produtos");
-
+// const produtos = require("../data/produtos");
+const produtoRepository   = require("../repositories/produtoRepository");
 function listarProdutos() {
-    return produtos;
+    return produtoRepository.findAll();
 }
 
 function buscarProdutoPorId(id) {
-    return produtos.find(p => p.id === id);
+    return produtoRepository.findById(id);
 }
 
 function cadastrarProduto(dados) {
     const novoProduto = {
-        id: produtos.length > 0
-            ? Math.max(...produtos.map(p => p.id)) + 1
-            : 1,
-        nome: dados.nome,
-        preco: dados.preco
+        name: dados.nome,
+        price: dados.preco
     };
 
-    produtos.push(novoProduto);
-
-    return novoProduto;
+    return produtoRepository.create(novoProduto);
 }
 
 function atualizarProduto(id, dados) {
-    const produto = produtos.find(p => p.id === id);
+    const produto = produtoRepository.findById(id);
 
     if (!produto) {
         return null;
     }
 
-    produto.nome = dados.nome;
-    produto.preco = dados.preco;
+    produto.name = dados.nome;
+    produto.price = dados.preco;
 
     return produto;
 }
 
 function excluirProduto(id) {
-    const indice = produtos.findIndex(p => p.id === id);
-
-    if (indice === -1) {
-        return null;
-    }
-
-    return produtos.splice(indice, 1)[0];
+    return produtoRepository.delete(id);
 }
 
 module.exports = {
